@@ -39,65 +39,32 @@ header p {
   color: #f3e8ff;
 }
 
-main {
-  max-width: 750px;
-  margin: auto;
-  padding: 18px;
-}
 
-.card {
-  background: white;
-  padding: 22px;
-  margin: 17px 0;
-  border-radius: 22px;
-  border: 1px solid #eadcff;
-  box-shadow: 0 5px 20px rgba(90,40,150,.08);
-}
+<section class="card" id="dashboard">
+  <h2>💜 Welcome to Mitran English</h2>
+  <p>Learn English with English, Tagalog and Korean.</p>
+  <p>영어 • 타갈로그어 • 한국어</p>
 
-h2 {
-  color: #6d28d9;
-}
+  <h3>🌟 Your Learning Dashboard</h3>
+  <p>Choose what you want to practice today!</p>
 
-h3 {
-  color: #7e22ce;
-}
+  <div class="feature-grid">
+    <button onclick="showFeature('lessons')">📚 Lessons</button>
+    <button onclick="showFeature('daily')">📝 Daily Quiz</button>
+    <button onclick="showFeature('tutor')">🤖 AI Tutor</button>
+    <button onclick="showFeature('translate')">🌐 Translation</button>
+    <button onclick="showFeature('speaking')">🎤 Speaking</button>
+    <button onclick="showFeature('vocabulary')">🎮 Vocabulary Games</button>
+    <button onclick="showFeature('listening')">🎧 Listening</button>
+    <button onclick="showFeature('writing')">✍️ Writing</button>
+    <button onclick="showFeature('progress')">🏆 My Progress</button>
+  </div>
 
-button {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
-  color: white;
-  border: none;
-  padding: 13px 17px;
-  border-radius: 13px;
-  margin: 6px 0;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-button:active {
-  transform: scale(.97);
-}
-
-.lesson,
-.answer {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: #f3e8ff;
-  color: #4c1d95;
-  border: 1px solid #e9d5ff;
-  padding: 15px;
-  border-radius: 13px;
-}
-
-.lesson:hover,
-.answer:hover {
-  background: #ead5ff;
-}
-
-#feedback {
-  margin-top: 15px;
-  font-weight: bold;
+  <div id="featurePanel">
+    Select a learning feature above.
+  </div>
+</section>
+weight: bold;
   color: #6d28d9;
 }
 
@@ -148,6 +115,41 @@ main{
 button{background:linear-gradient(135deg,#7138d8,#9333ea);color:white;border:0;padding:13px 17px;border-radius:12px;margin:5px;cursor:pointer;font-weight:bold;transition:.2s}
 button:active{transform:scale(.97)}
 .lesson,.answer{display:block;width:100%;text-align:left;background:#f3e8ff;color:#4c1d95;border:1px solid #e9d5ff;margin:8px 0;padding:15px;border-radius:12px}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.feature-grid button {
+  min-height: 75px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.18);
+}
+
+#featurePanel {
+  background: #f5edff;
+  border: 1px solid #e9d5ff;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 16px;
+  color: #4c1d95;
+}
+
+#featurePanel textarea {
+  width: 100%;
+  min-height: 85px;
+  padding: 12px;
+  border: 1px solid #d8b4fe;
+  border-radius: 12px;
+  font-size: 15px;
+}
+  
 </style>
 </head>
 <body>
@@ -285,6 +287,87 @@ render();
 }
 }
 render();
+
+function showFeature(feature) {
+  const panel = document.getElementById("featurePanel");
+
+  const features = {
+    lessons: `
+      <h3>📚 English Lessons</h3>
+      <p>Choose a lesson from your existing Lessons section below.</p>
+      <button onclick="document.getElementById('lessonList').scrollIntoView({behavior:'smooth'})">
+        Open My Lessons
+      </button>
+    `,
+    daily: `
+      <h3>📝 Daily Quiz</h3>
+      <p>Practice your English every day!</p>
+      <button onclick="openLesson(Math.floor(Math.random()*lessons.length))">
+        Start Quiz
+      </button>
+    `,
+    tutor: `
+      <h3>🤖 AI Tutor</h3>
+      <p>AI Tutor connection is not set up yet.</p>
+      <p>AI service will be added securely in a later step.</p>
+    `,
+    translate: `
+      <h3>🌐 Translation</h3>
+      <textarea id="translateText" placeholder="Type your English sentence here"></textarea>
+      <button onclick="translateText()">Translate</button>
+      <p id="translationResult"></p>
+    `,
+    speaking: `
+      <h3>🎤 Speaking Practice</h3>
+      <p>Practice saying this sentence:</p>
+      <h3>Hello! How are you today?</h3>
+      <button onclick="speakSentence()">Listen</button>
+    `,
+    vocabulary: `
+      <h3>🎮 Vocabulary Practice</h3>
+      <p>What does "Beautiful" mean?</p>
+      <button onclick="alert('Correct! Maganda.')">Maganda</button>
+      <button onclick="alert('Try again!')">Mabilis</button>
+    `,
+    listening: `
+      <h3>🎧 Listening Practice</h3>
+      <p>Listen to a simple English sentence.</p>
+      <button onclick="speakSentence()">Play Audio</button>
+    `,
+    writing: `
+      <h3>✍️ Writing Practice</h3>
+      <p>Write one English sentence:</p>
+      <textarea placeholder="Write your sentence here..."></textarea>
+    `,
+    progress: `
+      <h3>🏆 My Progress</h3>
+      <p id="dashboardProgress">Check your existing progress below.</p>
+      <button onclick="document.getElementById('progress').scrollIntoView({behavior:'smooth'})">
+        View Progress
+      </button>
+    `
+  };
+
+  panel.innerHTML = features[feature] || "Feature not found.";
+}
+
+function speakSentence() {
+  if (!("speechSynthesis" in window)) {
+    alert("Speech is not supported in this browser.");
+    return;
+  }
+
+  const message = new SpeechSynthesisUtterance(
+    "Hello! How are you today?"
+  );
+  message.lang = "en-US";
+  speechSynthesis.speak(message);
+}
+
+function translateText() {
+  alert("Translation service will be connected in a later step.");
+}
+  
 </script>
 </body>
 </html>
