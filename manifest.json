@@ -1,46 +1,28 @@
-const CACHE_NAME = "mitran-english-v1";
-
-const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./manifest.json"
-];
-
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(FILES_TO_CACHE);
-    })
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache =>
-            cache.put(event.request, copy)
-          );
-        }
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
-});
+{
+  "name": "Mitran English",
+  "short_name": "Mitran",
+  "description": "Learn English with Tagalog and Korean explanations, daily lessons and quizzes.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f4ff",
+  "theme_color": "#5146d8",
+  "lang": "en",
+  "categories": [
+    "education",
+    "learning"
+  ],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
