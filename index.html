@@ -1,18 +1,20 @@
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#5146d8">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mitran English</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#5146d8">
+  <title>Mitran English</title>
 <style>
-body{font-family:Arial;background:#f1f5ff;color:#172554;margin:0}
-header{background:#245bd2;color:white;text-align:center;padding:25px}
-main{max-width:650px;margin:auto;padding:15px}
-.card{background:white;padding:18px;margin:14px 0;border-radius:14px}
-button{background:#245bd2;color:white;border:0;padding:12px;border-radius:9px;margin:5px;cursor:pointer}
-.lesson,.answer{display:block;width:100%;text-align:left;background:#edf2ff;color:#172554}
+body{font-family:Arial,sans-serif;background:#f5f0ff;color:#30205c;margin:0}
+header{background:linear-gradient(135deg,#7138d8,#a855f7);color:white;text-align:center;padding:30px 20px;border-radius:0 0 25px 25px}
+main{max-width:750px;margin:auto;padding:18px}
+.card{background:white;padding:22px;margin:16px 0;border-radius:20px;box-shadow:0 5px 20px rgba(90,40,150,.10);border:1px solid #eadcff}
+button{background:linear-gradient(135deg,#7138d8,#9333ea);color:white;border:0;padding:13px 17px;border-radius:12px;margin:5px;cursor:pointer;font-weight:bold;transition:.2s}
+button:active{transform:scale(.97)}
+.lesson,.answer{display:block;width:100%;text-align:left;background:#f3e8ff;color:#4c1d95;border:1px solid #e9d5ff;margin:8px 0;padding:15px;border-radius:12px}
 </style>
 </head>
 <body>
@@ -29,8 +31,30 @@ button{background:#245bd2;color:white;border:0;padding:12px;border-radius:9px;ma
 <p>매일 영어를 배워 봐요!</p>
 </div>
 <div class="card">
-<h2>📚 Lessons</h2>
+<h2>📚 English Lessons</h2>
+<p>Choose your English level:</p>
+<div class="card">
+<h3>🌱 A1 – Beginner</h3>
+<p>Basic words and simple sentences.</p>
+</div>
+<div class="card">
+<h3>🌿 A2 – Elementary</h3>
+<p>Everyday English conversations.</p>
+</div>
+<div class="card">
+<h3>🌳 B1 – Intermediate</h3>
+<p>Grammar and daily communication.</p>
+</div>
+<div class="card">
+<h3>🚀 B2 – Upper Intermediate</h3>
+<p>More advanced grammar and vocabulary.</p>
+</div>
+<div class="card">
+<h3>🏆 C1 – Advanced</h3>
+<p>Advanced English communication.</p>
+</div>
 <div id="lessonList"></div>
+
 </div>
 <div class="card">
 <h2 id="lessonTitle">Choose a lesson</h2>
@@ -39,6 +63,14 @@ button{background:#245bd2;color:white;border:0;padding:12px;border-radius:9px;ma
 <div id="feedback"></div>
 </div>
 <div class="card">
+<h2>📝 Daily Quiz</h2>
+<p>Practice English every day!</p>
+<p>영어를 매일 연습해요!</p>
+<button onclick="openLesson(Math.floor(Math.random()*lessons.length))">
+Start Daily Quiz
+</button>
+</div>
+  <div class="card">
 <h2>⭐ My Progress</h2>
 <p id="progress">Completed: 0 lessons</p>
 <p id="points">Quiz points: 0</p>
@@ -93,7 +125,7 @@ document.getElementById("question").innerHTML=l.o.map((o,j)=>
 `<button class="answer" onclick="checkAnswer(${j})">${o}</button>`
 ).join("");
 document.getElementById("feedback").textContent="";
-document.getElementById("study").scrollIntoView({behavior:"smooth"});
+document.getElementById("lessonTitle").scrollIntoView({behavior:"smooth"});
 }
 function checkAnswer(choice){
 let l=lessons[current];
