@@ -2,63 +2,123 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mitran English</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f5ff;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
-  color: #1e293b;
-}
-h1 { color: #2563eb; }
-.card {
-  background: white;
-  padding: 22px;
-  margin: 16px 0;
-  border-radius: 16px;
-  box-shadow: 0 3px 10px #0001;
-}
-button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 14px 22px;
-  border-radius: 10px;
-  font-size: 16px;
-}
+body{font-family:Arial;background:#f1f5ff;color:#172554;margin:0}
+header{background:#245bd2;color:white;text-align:center;padding:25px}
+main{max-width:650px;margin:auto;padding:15px}
+.card{background:white;padding:18px;margin:14px 0;border-radius:14px}
+button{background:#245bd2;color:white;border:0;padding:12px;border-radius:9px;margin:5px;cursor:pointer}
+.lesson,.answer{display:block;width:100%;text-align:left;background:#edf2ff;color:#172554}
 </style>
 </head>
 <body>
-
-<h1>MITRAN ENGLISH</h1>
-<p>Learn English, One Day at a Time!</p>
-
+<header>
+<h1>📘 MITRAN ENGLISH</h1>
+<p>English • Tagalog • Korean</p>
+<p>Learn English every day!</p>
+</header>
+<main>
 <div class="card">
-<h2>📚 Daily Lessons</h2>
-<p>Learn English words and grammar.</p>
-<button onclick="alert('Your lesson is coming soon!')">
-Start Lesson
-</button>
+<h2>Welcome!</h2>
+<p>Learn English with Tagalog and Korean explanations.</p>
+<p>Matuto ng English araw-araw.</p>
+<p>매일 영어를 배워 봐요!</p>
 </div>
-
 <div class="card">
-<h2>📝 Daily Quiz</h2>
-<p>Test your English knowledge.</p>
-<button onclick="alert('Your quiz is coming soon!')">
-Start Quiz
-</button>
+<h2>📚 Lessons</h2>
+<div id="lessonList"></div>
 </div>
-
 <div class="card">
-<h2>🌏 Translation</h2>
-<p>Practice English and Tagalog.</p>
-<button onclick="alert('Translation coming soon!')">
-Translate
-</button>
+<h2 id="lessonTitle">Choose a lesson</h2>
+<div id="lessonText"></div>
+<div id="question"></div>
+<div id="feedback"></div>
 </div>
+<div class="card">
+<h2>⭐ My Progress</h2>
+<p id="progress">Completed: 0 lessons</p>
+<p id="points">Quiz points: 0</p>
+</div>
+</main>
+<script>
+const lessons=[
+{t:"Greetings",e:"Hello means a friendly greeting.",p:"Ang Hello ay isang pagbati.",k:"Hello는 친근한 인사말이에요.",x:"Hello! How are you?",q:"What does Hello mean?",o:["Goodbye","Greeting","Sorry"],a:1},
+{t:"Pronouns",e:"I, you, he, she, it, we and they are pronouns.",p:"Ang pronouns ay pamalit sa pangalan.",k:"대명사는 이름을 대신하는 말이에요.",x:"I am happy. = Masaya ako.",q:"Which means Ako?",o:["I","He","They"],a:0},
+{t:"Verb To Be",e:"Use am with I, is with he/she/it, and are with you/we/they.",p:"I am, She is, You are.",k:"I에는 am, She에는 is, You에는 are를 사용해요.",x:"She is happy.",q:"She ___ happy.",o:["am","is","are"],a:1},
+{t:"A and An",e:"Use a or an before a singular noun.",p:"Gamitin ang a o an bago ang isang bagay.",k:"단수 명사 앞에 a 또는 an을 사용해요.",x:"A book. An apple.",q:"___ apple",o:["A","An","The"],a:1},
+{t:"Plural Nouns",e:"Plural means more than one.",p:"Ang plural ay higit sa isa.",k:"복수는 하나보다 많은 것을 뜻해요.",x:"One cat, two cats.",q:"Plural of cat?",o:["Cats","Cates","Cat"],a:0},
+{t:"This and That",e:"This is nearby. That is far away.",p:"This ay malapit. That ay malayo.",k:"This는 가까운 것, That은 먼 것을 가리켜요.",x:"This is my phone.",q:"Which means malapit?",o:["This","That","Those"],a:0},
+{t:"Possessive Words",e:"My means something belongs to me.",p:"My ay aking o sa akin.",k:"My는 나의라는 뜻이에요.",x:"My book = Aking libro.",q:"Which means aking?",o:["Your","My","His"],a:1},
+{t:"Simple Present",e:"Use simple present for habits and facts.",p:"Gamitin ito sa nakagawian at katotohanan.",k:"습관과 사실을 표현할 때 사용해요.",x:"I work every day.",q:"She ___ every day.",o:["work","works","working"],a:1},
+{t:"Present Continuous",e:"Use am/is/are + verb-ing for actions happening now.",p:"Para sa ginagawa ngayon.",k:"지금 진행 중인 행동에 사용해요.",x:"I am eating.",q:"I am ___.",o:["eat","eating","eats"],a:1},
+{t:"Past Tense",e:"Use past tense for completed actions.",p:"Gamitin ito sa natapos na kilos.",k:"과거에 끝난 행동에 사용해요.",x:"I played yesterday.",q:"Past tense of play?",o:["Play","Played","Playing"],a:1},
+{t:"Future Tense",e:"Use will for future actions.",p:"Gamitin ang will para sa hinaharap.",k:"미래의 행동에는 will을 사용해요.",x:"I will study tomorrow.",q:"I ___ study tomorrow.",o:["will","was","am"],a:0},
+{t:"Questions",e:"Use do or does to ask many present-tense questions.",p:"Gamitin ang do o does sa pagtatanong.",k:"현재형 질문에는 do 또는 does를 사용해요.",x:"Do you like coffee?",q:"___ you like tea?",o:["Do","Does","Is"],a:0},
+{t:"Negative Sentences",e:"Use don't or doesn't to make negative sentences.",p:"Gamitin ang don't o doesn't sa pagtanggi.",k:"부정문에는 don't 또는 doesn't를 사용해요.",x:"I don't know.",q:"I ___ like coffee.",o:["doesn't","don't","isn't"],a:1},
+{t:"Adjectives",e:"Adjectives describe nouns.",p:"Ang adjectives ay naglalarawan ng tao o bagay.",k:"형용사는 사람이나 사물을 설명해요.",x:"A beautiful flower.",q:"Which is an adjective?",o:["Beautiful","Run","Quickly"],a:0},
+{t:"Adverbs",e:"Adverbs describe verbs and how actions happen.",p:"Ang adverbs ay naglalarawan kung paano ginagawa ang kilos.",k:"부사는 행동이 어떻게 일어나는지 설명해요.",x:"She walks slowly.",q:"Which is an adverb?",o:["Slowly","Beautiful","Book"],a:0},
+{t:"Prepositions",e:"In, on and under show position.",p:"Ang in, on at under ay nagpapakita ng lokasyon.",k:"In, on, under는 위치를 나타내요.",x:"The book is on the table.",q:"The cat is ___ the table. (ibaba)",o:["Under","On","At"],a:0},
+{t:"Can and Could",e:"Can expresses ability. Could can express past ability or polite requests.",p:"Ang can ay kaya; could ay maaaring magpahayag ng magalang na pakiusap.",k:"Can은 능력, Could는 과거 능력이나 정중한 부탁에 사용해요.",x:"I can swim.",q:"Which expresses ability?",o:["Can","Yesterday","Very"],a:0},
+{t:"Comparatives",e:"Use comparative adjectives to compare two things.",p:"Ginagamit ito sa paghahambing ng dalawang bagay.",k:"두 가지를 비교할 때 사용해요.",x:"Taller than me.",q:"My bag is ___ than yours.",o:["Big","Bigger","Biggest"],a:1},
+{t:"Present Perfect",e:"Use have or has + past participle.",p:"Gamitin ang have o has kasama ang past participle.",k:"Have 또는 has와 과거분사 형태를 사용해요.",x:"I have eaten.",q:"She ___ finished.",o:["have","has","is"],a:1},
+{t:"Daily Conversation",e:"Practice common everyday English phrases.",p:"Sanayin ang mga karaniwang usapan araw-araw.",k:"일상 영어 표현을 연습해요.",x:"Could you help me, please?",q:"What is a polite request?",o:["Help me now!","Could you help me, please?","Go away!"],a:1}
+];
 
+let completed=JSON.parse(localStorage.getItem("mitranDone")||"[]");
+let points=Number(localStorage.getItem("mitranPoints")||0);
+let current=-1;
+
+function render(){
+document.getElementById("lessonList").innerHTML=lessons.map((l,i)=>
+`<button class="lesson" onclick="openLesson(${i})">${i+1}. ${l.t} ${completed.includes(i)?"✓":""}</button>`
+).join("");
+document.getElementById("progress").textContent="Completed: "+completed.length+" lessons";
+document.getElementById("points").textContent="Quiz points: "+points;
+}
+function openLesson(i){
+current=i;
+let l=lessons[i];
+document.getElementById("lessonTitle").textContent=(i+1)+". "+l.t;
+document.getElementById("lessonText").innerHTML=
+`<p><b>English:</b> ${l.e}</p>
+<p><b>Tagalog:</b> ${l.p}</p>
+<p><b>Korean:</b> ${l.k}</p>
+<p><b>Example:</b> ${l.x}</p>
+<hr><h3>Daily Quiz</h3><p>${l.q}</p>`;
+document.getElementById("question").innerHTML=l.o.map((o,j)=>
+`<button class="answer" onclick="checkAnswer(${j})">${o}</button>`
+).join("");
+document.getElementById("feedback").textContent="";
+document.getElementById("study").scrollIntoView({behavior:"smooth"});
+}
+function checkAnswer(choice){
+let l=lessons[current];
+if(choice===l.a){
+document.getElementById("feedback").textContent="✅ Correct! "+l.p;
+if(!completed.includes(current)){
+completed.push(current);
+points++;
+localStorage.setItem("mitranDone",JSON.stringify(completed));
+localStorage.setItem("mitranPoints",points);
+}
+}else{
+document.getElementById("feedback").textContent="❌ Try again! Correct answer: "+l.o[l.a];
+}
+render();
+}
+function resetProgress(){
+if(confirm("Reset all progress?")){
+completed=[];
+points=0;
+localStorage.removeItem("mitranDone");
+localStorage.removeItem("mitranPoints");
+render();
+}
+}
+render();
+</script>
 </body>
 </html>
+
