@@ -6,6 +6,129 @@
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#5146d8">
   <title>Mitran English</title>
+<style>* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f1ff;
+  color: #30204f;
+  margin: 0;
+}
+
+header {
+  background: linear-gradient(135deg, #6d28d9, #a855f7);
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 6px 20px rgba(109,40,217,.2);
+}
+
+header h1 {
+  font-size: 27px;
+  letter-spacing: 1px;
+}
+
+header p {
+  color: #f3e8ff;
+}
+
+main {
+  max-width: 750px;
+  margin: auto;
+  padding: 18px;
+}
+
+.card {
+  background: white;
+  padding: 22px;
+  margin: 17px 0;
+  border-radius: 22px;
+  border: 1px solid #eadcff;
+  box-shadow: 0 5px 20px rgba(90,40,150,.08);
+}
+
+h2 {
+  color: #6d28d9;
+}
+
+h3 {
+  color: #7e22ce;
+}
+
+button {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  border: none;
+  padding: 13px 17px;
+  border-radius: 13px;
+  margin: 6px 0;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+.lesson,
+.answer {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #f3e8ff;
+  color: #4c1d95;
+  border: 1px solid #e9d5ff;
+  padding: 15px;
+  border-radius: 13px;
+}
+
+.lesson:hover,
+.answer:hover {
+  background: #ead5ff;
+}
+
+#feedback {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #6d28d9;
+}
+
+#progress,
+#points {
+  background: #f3e8ff;
+  padding: 13px;
+  border-radius: 12px;
+  color: #581c87;
+  font-weight: bold;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eadcff;
+  margin: 18px 0;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  header h1 {
+    font-size: 23px;
+  }
+}
 </style>
 body{font-family:Arial,sans-serif;background:#f5f0ff;color:#30205c;margin:0}
 header{background:linear-gradient(135deg,#7138d8,#a855f7);color:white;text-align:center;padding:30px 20px;border-radius:0 0 25px 25px}
