@@ -6,7 +6,26 @@
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#5146d8">
   <title>Mitran English</title>
-<style>
+<.horizontal-pages {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 15px;
+  padding: 10px;
+}
+
+.horizontal-pages .page {
+  flex: 0 0 88%;
+  min-width: 88%;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+}
+
+.horizontal-pages::-webkit-scrollbar {
+  display: none;
+}
+</style>style>
 body{font-family:Arial,sans-serif;background:#f5f0ff;color:#30205c;margin:0}
 header{background:linear-gradient(135deg,#7138d8,#a855f7);color:white;text-align:center;padding:30px 20px;border-radius:0 0 25px 25px}
 main{
